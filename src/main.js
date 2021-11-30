@@ -1,8 +1,12 @@
-import Vue from 'vue';
-import App from './App.vue';
+import "@/assets/main.scss";
+import "@mdi/font/css/materialdesignicons.css";
 
-Vue.config.productionTip = false;
+import Vue from "vue";
+import Buefy from "buefy";
+import App from "./App.vue";
+
+Vue.use(Buefy);
 
 new Vue({
   render: (h) => h(App),
-}).$mount('#app');
+}).$mount("#app");
