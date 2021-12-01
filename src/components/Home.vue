@@ -65,11 +65,22 @@
       </div>
     </div>
 
-    <div class="column" style="margin-top: 2.5rem">
-      <h3 class="title is-4">{{ simulationType }}</h3>
-    </div>
-
     <div v-if="simulationType === 'SAC'" class="table-content">
+      <div>
+        <h3 class="title is-4">{{ simulationType }}</h3>
+      </div>
+
+      <div class="amount-content">
+        <div class="amount-text">
+          <label>Valor Total de Juros</label>
+          <p>{{ sac.valorTotalJuros }}</p>
+        </div>
+        <div class="amount-text">
+          <label>Valor Total do Financiamento</label>
+          <p>{{ sac.valorTotalFinanciamento }}</p>
+        </div>
+      </div>
+
       <b-table :data="sac.prestacoes" :key="sac.index" hoverable mobile-cards>
         <b-table-column field="index" label="Período" v-slot="props">
           {{ props.row.index }}
@@ -97,28 +108,47 @@
       </b-table>
     </div>
 
-    <div v-if="simulationType === 'PRICE'">
-      <hr size="50" />
-      <div class="columns is-multiline">
-        <div class="column is-one-third">
-          <div class="detail-price">
-            <h3 class="title is-5">Valor da Prestação</h3>
-            <p>{{ price.valorPrestacao }}</p>
-          </div>
+    <div v-if="simulationType === 'PRICE'" class="table-content">
+      <div>
+        <h3 class="title is-4">{{ simulationType }}</h3>
+      </div>
+
+      <div class="amount-content">
+        <div class="amount-text">
+          <label>Valor Total de Juros</label>
+          <p>{{ price.valorTotalJuros }}</p>
         </div>
-        <div class="column is-one-third">
-          <div class="detail-price">
-            <h3 class="title is-5">Valor total do Financiamento</h3>
-            <p>{{ price.valorTotalFinanciamento }}</p>
-          </div>
-        </div>
-        <div class="column is-one-third">
-          <div class="detail-price">
-            <h3 class="title is-5">Valor total de Juros pago</h3>
-            <p>{{ price.valorTotalJuros }}</p>
-          </div>
+        <div class="amount-text">
+          <label>Valor Total do Financiamento</label>
+          <p>{{ price.valorTotalFinanciamento }}</p>
         </div>
       </div>
+
+      <b-table :data="price.parcelas" :key="price.index" hoverable mobile-cards>
+        <b-table-column field="index" label="Período" v-slot="props">
+          {{ props.row.index }}
+        </b-table-column>
+
+        <b-table-column field="amortization" label="Amortização" v-slot="props" centered>
+          {{ props.row.amortization }}
+        </b-table-column>
+
+        <b-table-column field="interestRateBalance" label="Juros" v-slot="props" centered>
+          {{ props.row.interestRateBalance }}
+        </b-table-column>
+
+        <b-table-column field="portion" label="Prestação" v-slot="props" centered>
+          {{ props.row.portion }}
+        </b-table-column>
+
+        <b-table-column field="valuePaid" label="Valor Pago" v-slot="props" centered>
+          {{ props.row.valuePaid }}
+        </b-table-column>
+
+        <b-table-column field="balance" label="Saldo Devedor" v-slot="props" centered>
+          {{ props.row.balance }}
+        </b-table-column>
+      </b-table>
     </div>
   </section>
 </template>
@@ -174,6 +204,15 @@ export default {
   .fields-content {
     margin-top: 2rem;
     justify-content: center;
+  }
+
+  .amount-content {
+    display: flex;
+    justify-content: center;
+
+    .amount-text {
+      margin: 20px 0px 50px 70px;
+    }
   }
 
   .table-content {
